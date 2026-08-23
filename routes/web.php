@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Admin;
+use App\Models\Kursus;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -19,38 +21,51 @@ Route::get('/about', function () {
 });
 
 Route::get('/contact', function () {
-    return view('contact');
+    $data = Admin::all();
+    // dd($data);
+    return view('contact', ['data' => $data]);
 });
 
-Route::get('/siswa', function () {
-    $data = [
-        [
-            'nama' => 'Budi',
-            'nilai' => 80,
-            'id' => '001',
-            'tglLahir' => '05/01/2000',
-            'jurusan' => 'PPLG',
-        ],
-        [
-            'nama' => 'Novi',
-            'nilai' => 85,
-            'id' => '002',
-            'tglLahir' => '11/11/2000',
-            'jurusan' => 'PPLG',
-        ],
-        [
-            'nama' => 'Wahyu',
-            'nilai' => 90,
-            'id' => '003',
-            'tglLahir' => '06/10/2000',
-            'jurusan' => 'PPLG',
-        ],
-    ];
+Route::get('/kursus', function () {
+    // $data = [
+    //     [
+    //         'id' => '1',
+    //         'nama_kursus' => 'Pemrograman Web',
+    //         'deskripsi' => 'Ini deskripsi',
+    //         'harga' => 500000,
+    //         'durasi' => 20,
+    //         'level' => 'Menengah',
+    //         'status' => 'Aktif'
+    //     ],
+    //     [
+    //         'id' => '2',
+    //         'nama_kursus' => 'Pemrograman Mobile',
+    //         'deskripsi' => 'Ini deskripsi',
+    //         'harga' => 900000,
+    //         'durasi' => 40,
+    //         'level' => 'Mahir',
+    //         'status' => 'Aktif'
+    //     ],
+    //     [
+    //         'id' => '2',
+    //         'nama_kursus' => 'UI/UX Design',
+    //         'deskripsi' => 'Ini deskripsi',
+    //         'harga' => 400000,
+    //         'durasi' => 20,
+    //         'level' => 'Pemula',
+    //         'status' => 'Tidak Aktif'
+    //     ],
+    // ];
+    $data = Kursus::where('status', 'Aktif')
+        ->orderBy('nama_kursus', 'asc')
+        ->orderBy('level', 'desc')
+        ->get();
 
-    return view('siswa.index', ['data' => $data]);
+    return view('kursus.index', ['data' => $data]);
 });
 
-Route::get('/siswa/{id}', function ($id) {
+Route::get('/kursus/{id}', function ($id) {
     // dd($id);
-    return view('siswa.show', ['id' => $id]);
+    $data = Kursus::where('id_kursus', $id)->first();
+    return view('kursus.show', ['data' => $data]);
 });

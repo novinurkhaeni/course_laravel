@@ -11,12 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('siswa', function (Blueprint $table) {
-            $table->id('id_siswa');                    // BIGINT UNSIGNED, PK
+        Schema::create('guru', function (Blueprint $table) {
+            $table->id('id_guru');                    // BIGINT UNSIGNED, PK
             $table->string('nama', 100);              // VARCHAR(100)
             $table->string('email', 100)->unique();   // VARCHAR(100)
             $table->string('password', 255);          // VARCHAR(255)
-            $table->string('photo', 255)->nullable(); // VARCHAR(255)
+            $table->string('no_hp', 20)->nullable(); // VARCHAR(20)
+            $table->string('keahlian', 100)->nullable();
+            $table->string('photo', 255)->nullable();
+            $table->enum('status', [
+                'Aktif',
+                'Tidak Aktif'
+            ])->default('Aktif');
             $table->timestamps();
         });
     }
@@ -26,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('siswa');
+        Schema::dropIfExists('guru');
     }
 };
