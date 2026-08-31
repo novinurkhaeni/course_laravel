@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 
 class SiswaController extends Controller
@@ -11,7 +12,9 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        //
+        $data = Siswa::orderBy('nama', 'asc')->paginate(10);
+
+        return view('siswa.index', ['data' => $data]);
     }
 
     /**
