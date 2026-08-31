@@ -37,7 +37,4 @@
             @endforeach
         </div>
     </div>
-    <x-slot:footer>
-        <strong>Contact Page</strong>
-    </x-slot:footer>
 </x-layout>

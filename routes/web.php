@@ -1,6 +1,8 @@
 <?php
 
-use App\Models\Admin;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\KursusController;
 use App\Models\Kursus;
 use Illuminate\Support\Facades\Route;
 
@@ -8,64 +10,34 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/about', function () {
-    $nama = 'Novi Nurkhaeni';
-    $data = 'Novi Nurkhaeni';
-    $umur = 15;
+Route::post('/auth/logout', [AuthController::class, 'logout'])->name('logout');
 
-    return view('about', ['data' => $nama, 'umur' => $umur]);
+Route::middleware('guest')->controller(AuthController::class)->group(function () {
+    Route::get('/auth/login', 'showLogin')->name('auth.login');
+
+    Route::get('/auth/register',  'showRegister')->name('auth.register');
+
+    Route::post('/auth/login', 'login')->name('login');
+
+    Route::post('/auth/register', 'register')->name('register');
+});
+
+Route::get('/about', function () {
+    // $nama = 'Novi Nurkhaeni';
+    // $data = 'Novi Nurkhaeni';
+    // $umur = 15;
+
+    // return view('about', ['data' => $nama, 'umur' => $umur]);
     // return view('about', compact('data', 'umur'));
     // return view('about')
     //             ->with('data', $nama)
     //             ->with('umur', $umur);
+
+    return view('about');
 });
 
-Route::get('/contact', function () {
-    $data = Admin::all();
-    // dd($data);
-    return view('contact', ['data' => $data]);
-});
+Route::get('/contact', [AdminController::class, 'index']);
 
-Route::get('/kursus', function () {
-    // $data = [
-    //     [
-    //         'id' => '1',
-    //         'nama_kursus' => 'Pemrograman Web',
-    //         'deskripsi' => 'Ini deskripsi',
-    //         'harga' => 500000,
-    //         'durasi' => 20,
-    //         'level' => 'Menengah',
-    //         'status' => 'Aktif'
-    //     ],
-    //     [
-    //         'id' => '2',
-    //         'nama_kursus' => 'Pemrograman Mobile',
-    //         'deskripsi' => 'Ini deskripsi',
-    //         'harga' => 900000,
-    //         'durasi' => 40,
-    //         'level' => 'Mahir',
-    //         'status' => 'Aktif'
-    //     ],
-    //     [
-    //         'id' => '2',
-    //         'nama_kursus' => 'UI/UX Design',
-    //         'deskripsi' => 'Ini deskripsi',
-    //         'harga' => 400000,
-    //         'durasi' => 20,
-    //         'level' => 'Pemula',
-    //         'status' => 'Tidak Aktif'
-    //     ],
-    // ];
-    $data = Kursus::where('status', 'Aktif')
-        ->orderBy('nama_kursus', 'asc')
-        ->orderBy('level', 'desc')
-        ->get();
+Route::get('/kursus', [KursusController::class, 'index']);
 
-    return view('kursus.index', ['data' => $data]);
-});
-
-Route::get('/kursus/{id}', function ($id) {
-    // dd($id);
-    $data = Kursus::where('id_kursus', $id)->first();
-    return view('kursus.show', ['data' => $data]);
-});
+Route::get('/kursus/{id}', [KursusController::class, 'show']);

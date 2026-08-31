@@ -65,7 +65,4 @@
             @endforeach
         </div>
     </div>
-    <x-slot:footer>
-        <strong>Siswa Page</strong>
-    </x-slot:footer>
 </x-layout>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('kursus', function (Blueprint $table) {
             $table->id('id_kursus');                    // BIGINT UNSIGNED, PK
-            $table->unsignedBigInteger('id_admin');    // FK
+            // $table->unsignedBigInteger('id_admin');    // FK
             $table->string('nama_kursus', 150);
             $table->text('deskripsi')->nullable();
             $table->decimal('harga', 12, 2)->default(0);

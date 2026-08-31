@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
             SiswaSeeder::class,
             GuruSeeder::class,
             AdminSeeder::class,
-            KursusSeeder::class
+            KursusSeeder::class,
+            UserSeeder::class
         ]);
     }
 }

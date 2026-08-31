@@ -15,12 +15,14 @@ return new class extends Migration
             $table->id('id_admin');                    // BIGINT UNSIGNED, PK
             $table->string('nama', 100);
             $table->string('email', 100)->unique();
+            $table->timestamp('email_verified_at')->nullable();
             $table->string('password', 255);
             $table->string('photo', 255)->nullable();
             $table->enum('status', [
                 'Aktif',
                 'Tidak Aktif'
             ])->default('Aktif');
+            $table->rememberToken();
             $table->timestamps();
         });
     }

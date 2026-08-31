@@ -64,7 +64,4 @@
             </div>
         </dl>
     </div>
-    <x-slot:footer>
-        <strong>Detail Siswa Page</strong>
-    </x-slot:footer>
 </x-layout>
